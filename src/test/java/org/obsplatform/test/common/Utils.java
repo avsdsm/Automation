@@ -17,6 +17,7 @@ import com.jayway.restassured.path.json.JsonPath;
 import com.jayway.restassured.specification.RequestSpecification;
 import com.jayway.restassured.specification.ResponseSpecification;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,14 +28,14 @@ public class Utils {
 
 	
 	 public static final String TENANT_IDENTIFIER = "tenantIdentifier=default";
-	
-    private static final String LOGIN_URL = "/obsplatform/api/v1/authentication?username=billing&password=password&tenantIdentifier=default";
+     private static final String LOGIN_URL = "/obsplatform/api/v1/authentication?username=billing&password=password&tenantIdentifier=default";
 
 
     public static void initializeRESTAssured() {
         RestAssured.baseURI ="https://localhost";
         RestAssured.port = 8085;
-        RestAssured.keystore( "/etc/tomcat7/keystore", "8985891857");//openmf
+        File file=new File("src/test/resources/keystore");
+        RestAssured.keystore(file.getAbsolutePath(), "8985891857");//openmf
     }
 
     public static String loginIntoServerAndGetBase64EncodedAuthenticationKey() {
