@@ -3,7 +3,7 @@ out/
 build
 .classpath
 .project
-.settings
+.settings/*
 .gradle
 *.log
 bin/*
