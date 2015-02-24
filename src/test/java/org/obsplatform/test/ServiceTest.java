@@ -2,10 +2,8 @@ package org.obsplatform.test;
 
 import java.util.ArrayList;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.obsplatform.test.common.Utils;
 import org.obsplatform.test.common.services.ServiceDomain;
@@ -31,28 +29,21 @@ public class ServiceTest {
 		this.responseSpec = new ResponseSpecBuilder().expectStatusCode(200).build();
 	}
 
-	@Ignore
+
 	@Test
-	public void testDiscountElements() {
+	public void testGetServiceElements() {
 
 		ArrayList<ServiceDomain> serviceList = ServiceHelper.getAllServices(requestSpec, responseSpec);
+		Assert.assertNotNull(serviceList);
 		System.out.println(serviceList);
 		
 	}
 
 	@Test
-	public void testCreateDiscount() {
+	public void testCreateService() {
 
 		Integer service = ServiceHelper.createService(requestSpec,responseSpec);
 		Assert.assertNotNull(service);
 
-	}
-
-	@After
-	public void tearDown() {
-
-		System.out.println("----------------Successfully executed--------------------");
-
-	}
-
+    }
 }

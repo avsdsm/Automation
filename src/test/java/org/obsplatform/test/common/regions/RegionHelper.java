@@ -3,6 +3,7 @@ package org.obsplatform.test.common.regions;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.JSONArray;
 import org.obsplatform.test.common.Utils;
 
 import com.google.common.reflect.TypeToken;
@@ -50,6 +51,7 @@ public class RegionHelper {
         map.put("regionCode", Utils.randomStringGenerator("REG-",4));
         map.put("regionName",Utils.randomStringGenerator("REG", 3));
         map.put("countryId", "");
+        map.put("states", new JSONArray().toString());
         System.out.println("map : " + map);	
         return new Gson().toJson(map);
 	}

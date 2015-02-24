@@ -1,14 +1,11 @@
 package org.obsplatform.test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.obsplatform.test.common.Utils;
+import org.obsplatform.test.common.chargecode.ChargeCodeData;
 import org.obsplatform.test.common.chargecode.ChargeCodeHelper;
 
 import com.jayway.restassured.builder.RequestSpecBuilder;
@@ -33,16 +30,16 @@ public class ChargeCodeTest {
 
 	
 	@Test
-	public void testCreateDiscount() {
+	public void testCreateChargeCode() {
 		
 		Integer chargecode = ChargeCodeHelper.createChargeCode(requestSpec,responseSpec);
 		Assert.assertNotNull(chargecode);
 		
-		final HashMap response = ChargeCodeHelper.getChargeCode(requestSpec, responseSpec, chargecode);
+		final ChargeCodeData response = ChargeCodeHelper.getChargeCode(requestSpec, responseSpec, chargecode);
 		
-		Integer taxMap = ChargeCodeHelper.createTax(requestSpec,responseSpec,response.get("chargeCode").toString());
+		Integer taxMap = ChargeCodeHelper.createTax(requestSpec,responseSpec,response.getChargeCode());
 		Assert.assertNotNull(taxMap);
-		System.out.println("response:----"+ response.get("chargeCode"));
+		System.out.println("response:----"+ response.getChargeCode());
 	}
 
 	@After

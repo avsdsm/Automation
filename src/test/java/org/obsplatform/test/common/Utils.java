@@ -36,6 +36,7 @@ public class Utils {
         RestAssured.port = 8085;
         File file=new File("src/test/resources/keystore");
         RestAssured.keystore(file.getAbsolutePath(), "8985891857");//openmf
+       // RestAssured.keystore("/home/rakesh/.keystore", "rahman");
     }
 
     public static String loginIntoServerAndGetBase64EncodedAuthenticationKey() {
@@ -126,4 +127,15 @@ public class Utils {
 		final String formattedDate = formatter.print(localDate);
 		return formattedDate;
 	}
-}
+
+	public static String randomPhoneNumberGenerator(final int len) {
+		  String sourceString="0123456789";
+		  int lengthOfSource = sourceString.length();
+		    Random rnd = new Random();
+	        StringBuilder sb = new StringBuilder(len);
+	        for (int i = 0; i < len; i++)
+	            sb.append((sourceString).charAt(rnd.nextInt(lengthOfSource)));
+	        return  (sb.toString());
+	    }
+	}
+

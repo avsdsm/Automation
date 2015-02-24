@@ -1,8 +1,8 @@
 package org.obsplatform.test.common.contractperiod;
 
 import java.util.HashMap;
+import java.util.Random;
 
-import org.junit.Assert;
 import org.obsplatform.test.common.Utils;
 
 import com.google.gson.Gson;
@@ -15,27 +15,27 @@ public class ContractPeriodHelper {
 
 	public static Integer createContractPeriod(final RequestSpecification requestSpec,final ResponseSpecification responseSpec) {
 		Integer contract = null;
-		for (int i = 0; i <= 1; i++) {
-			System.out.println("---------------------------------CREATING A CONTRACT PERIOD["+ i+ "]---------------------------------------------");
-			contract = Utils.performServerPost(requestSpec, responseSpec,CREATE_CONTRACT_PERIOD_URL, getContractPeriodBodyAsJSON(i),"resourceId");
-			Assert.assertNotNull(contract);
-		}
+		System.out.println("---------------------------------CREATING A CONTRACT PERIOD---------------------------------------------");
+		contract = Utils.performServerPost(requestSpec, responseSpec,CREATE_CONTRACT_PERIOD_URL, getContractPeriodBodyAsJSON(),"resourceId");
 		return contract;
 
 	}
 
-	public static String getContractPeriodBodyAsJSON(int i) {
+	public static String getContractPeriodBodyAsJSON() {
 		HashMap<String, String> map = new HashMap<String, String>();
-		switch (i) {
-		case 0:
-			map.put("subscriptionType", "Week(s)");
-			map.put("subscriptionPeriod", "ABCDF");
-			map.put("units", "6");
-			break;
-
-		default:
-			break;
-		}
+			map.put("subscriptionType", subscriptionType.getRandom().toString()+"(s)");
+			map.put("subscriptionPeriod", Utils.randomNameGenerator("Sub_", 3));
+			map.put("units", Utils.randomNumberGenerator(0, 15));
+			 System.out.println("map : " + map);
 		return new Gson().toJson(map);
+	}
+
+	public enum subscriptionType {
+		Month,Week, Day;
+
+		public static subscriptionType getRandom() {
+			final Random random = new Random();
+			return values()[random.nextInt(values().length)];
+		}
 	}
 }

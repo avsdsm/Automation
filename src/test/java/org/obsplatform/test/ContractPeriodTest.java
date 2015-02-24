@@ -15,7 +15,7 @@ import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.specification.RequestSpecification;
 import com.jayway.restassured.specification.ResponseSpecification;
 
-public class ContractPeriodIntegrationTest {
+public class ContractPeriodTest {
     private RequestSpecification requestSpec;
     private ResponseSpecification responseSpec;
     private ContractPeriodHelper accountHelper;
@@ -29,9 +29,9 @@ public class ContractPeriodIntegrationTest {
         this.responseSpec = new ResponseSpecBuilder().expectStatusCode(200).build();
     }
     
-    @Ignore
+  
     @Test
-    public void flowContractPeriod(){
+    public void createContractPeriod(){
     	@SuppressWarnings("static-access")
 		Integer contract = accountHelper.createContractPeriod(requestSpec, responseSpec);
     	System.out.println("----****----" +contract+ "----****----");

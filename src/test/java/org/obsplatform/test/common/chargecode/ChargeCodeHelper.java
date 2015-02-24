@@ -1,11 +1,11 @@
 package org.obsplatform.test.common.chargecode;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.obsplatform.test.common.Utils;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.jayway.restassured.specification.RequestSpecification;
 import com.jayway.restassured.specification.ResponseSpecification;
@@ -33,10 +33,13 @@ public class ChargeCodeHelper {
 	        return resourceId;
 	 }
 	 
-	 public static HashMap getChargeCode(final RequestSpecification requestSpec,
-	            final ResponseSpecification responseSpec, final Integer chargeId) {
-	        final String url = SERVICE_URL + "/" + chargeId + "?" + Utils.TENANT_IDENTIFIER;
-	        return Utils.performServerGet(requestSpec, responseSpec, url, "");
+	 @SuppressWarnings("serial")
+	public static ChargeCodeData getChargeCode(final RequestSpecification requestSpec,final ResponseSpecification responseSpec, final Integer chargeId) {
+	       
+		   final String url = SERVICE_URL + "/" + chargeId + "?" + Utils.TENANT_IDENTIFIER;
+		   System.out.println("------------------------ RETRIEVING CHARGECODE DATA -------------------------");
+		   final String jsonData = new Gson().toJson(Utils.performServerGet(requestSpec, responseSpec, url, ""));
+		   return new Gson().fromJson(jsonData, new TypeToken<ChargeCodeData>() {}.getType());
 	 }
 	 
 	 
@@ -64,7 +67,7 @@ public class ChargeCodeHelper {
 	       
 	        map.put("chargeCode", chargecode);
 	        map.put("dateFormat", "dd MMMM yyyy");
-	        map.put("startDate", "17 February 2015");
+	        map.put("startDate", Utils.convertDateToURLFormat(new LocalDate(), "dd MMMM yyyy"));
 	        map.put("taxCode", Utils.randomStringGenerator("TA",5));
 	        map.put("locale","en");
 	        map.put("rate",Utils.randomNumberGenerator(1,100));

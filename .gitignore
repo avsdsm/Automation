@@ -1,5 +1,8 @@
-.gradle/*
-build/*
-.settings/*
-bin/*
-.project/*
+bin
+out/
+build
+.classpath
+.project
+.settings
+.gradle
+*.log
