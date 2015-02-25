@@ -2,6 +2,7 @@ package org.obsplatform.test.common.discount;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import org.joda.time.LocalDate;
 import org.obsplatform.test.common.Utils;
@@ -32,7 +33,6 @@ public class DiscountHelper {
 		  final String GET_DISCOUNTS_URL = DISCOUNTS_URL + "/"+ discountId + "?" + Utils.TENANT_IDENTIFIER;
 		  System.out.println("------------------------ RETRIEVING  DISCOUNT -------------------------");
 		  final String jsonData = new Gson().toJson(Utils.performServerGet(requestSpec, responseSpec, GET_DISCOUNTS_URL, ""));
-		  System.out.println(jsonData);
 	      return new Gson().fromJson(jsonData, new TypeToken<DiscountDomain>() {}.getType());
 	}
 	
@@ -51,7 +51,7 @@ public class DiscountHelper {
 	        map.put("discountCode", org.obsplatform.test.common.Utils.randomStringGenerator("DI",5));
 	        map.put("discountRate",Utils.randomNumberGenerator(1,100));
 	        map.put("discountDescription", "off");
-	        map.put("discountType","Percentage");
+	        map.put("discountType",Type.getRandom().toString());
 	        map.put("dateFormat", "dd MMMM yyyy");
 	        map.put("locale", "en");
 	        map.put("startDate",Utils.convertDateToURLFormat(new LocalDate(), "dd MMMM yyyy"));
@@ -59,7 +59,15 @@ public class DiscountHelper {
 	        System.out.println("map : " + map);	
 	        return new Gson().toJson(map);
 	  }
+	  
+	  
+	public enum Type {
+		Percentage, Flat;
 
-
+		public static Type getRandom() {
+			final Random random = new Random();
+			return values()[random.nextInt(values().length)];
+		}
+	}
 
 }
